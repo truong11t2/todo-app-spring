@@ -1,0 +1,15 @@
+server.port: 7000
+server.error.include-message: always
+
+app:
+  todo-service:
+    host: localhost
+    port: 7001
+  user-service:
+    host: localhost
+    port: 7002
+
+logging:
+  level:
+    root: INFO
+    project: DEBUG
