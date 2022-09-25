@@ -50,7 +50,7 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public List<Todo> getTodos(String userName) {
-        String url = todoServiceUrl + "?username=" + userName;
+        String url = todoServiceUrl + "?userName=" + userName;
         LOG.debug("Will call the getTodo API on URL: {}", url);
         List<Todo> todos = restTemplate
             .exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<Todo>>() {})
@@ -60,14 +60,14 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public void deleteTodo(int todoId) {
-        String url = todoServiceUrl + "?todoId=" + todoId;
+        String url = todoServiceUrl + "/deleteId?todoId=" + todoId;
         LOG.debug("Will call the deleteTodo API on URL: {}", url);
         restTemplate.delete(url);
     }
 
     @Override
     public void deleteTodos(String userName) {
-        String url = todoServiceUrl + "?userName=" + userName;
+        String url = todoServiceUrl + "/deleteUser?userName=" + userName;
         LOG.debug("Will call the deleteTodos API on URL: {}", url);
         restTemplate.delete(url);
     }
@@ -85,7 +85,7 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public User getUser(String userName) {
-        String url = userServiceUrl + "/" + userName;
+        String url = userServiceUrl + "?userName=" + userName;
         LOG.debug("Will call the getUser API on URL: {}", url);
 
         User user = restTemplate.getForObject(url, User.class);

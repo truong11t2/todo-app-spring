@@ -39,18 +39,18 @@ public interface TodoService {
     List<Todo> getTodos(@RequestParam(value = "userName", required = true) String userName);
 
     /**
-     * Sample usage: "curl -X DELETE $HOST:$PORT/doto/1".
+     * Sample usage: "curl -X DELETE $HOST:$PORT/todo/delete?todoId=1".
      *
      * @param todoId Id of the task
      */
-    @DeleteMapping(value = "/todo/{todoId}")
-    void deleteTodo(@PathVariable int todoId);
+    @DeleteMapping(value = "/todo/deleteId")
+    void deleteTodo(@RequestParam(value = "todoId", required = true) int todoId);
 
     /**
-     * Sample usage: "curl -X DELETE $HOST:$PORT/doto/delete?userName=abc".
+     * Sample usage: "curl -X DELETE $HOST:$PORT/todo/delete?userName=abc".
      *
      * @param userName Id of the task
      */
-    @DeleteMapping(value = "/todo")
+    @DeleteMapping(value = "/todo/deleteUser")
     void deleteTodos(@RequestParam(value = "userName", required = true) String userName);
 }
