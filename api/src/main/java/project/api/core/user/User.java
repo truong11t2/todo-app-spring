@@ -8,13 +8,13 @@ public class User {
     private String firstName;
     private String lastName;
     private String email;
-    private Set<String> roles;
+    private Set<Role> roles;
     private String serviceAddress;
 
     public User() {
     }
 
-    public User(String userName, String passWord, String firstName, String lastName, String email, Set<String> roles, String serviceAddress) {
+    public User(String userName, String passWord, String firstName, String lastName, String email, Set<Role> roles, String serviceAddress) {
         this.userName = userName;
         this.passWord = passWord;
         this.firstName = firstName;
@@ -64,11 +64,11 @@ public class User {
         this.email = email;
     }
 
-    public Set<String> getRoles() {
+    public Set<Role> getRoles() {
         return this.roles;
     }
 
-    public void setRoles(Set<String> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

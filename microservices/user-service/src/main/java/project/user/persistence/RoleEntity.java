@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import project.api.core.user.Role;
-import project.api.core.user.Role.ERole;
 
 @Entity
 @Table(name = "role")

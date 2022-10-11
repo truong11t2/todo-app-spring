@@ -20,5 +20,5 @@ logging:
     root: INFO
     project: DEBUG
 
-project.main.jwtSecret: projectSecretKey
+project.main.jwtSecret: projectSecretKeyprojectSecretKeyprojectSecretKeyprojectSecretKey
 project.main.jwtExpirationMs: 86400000
