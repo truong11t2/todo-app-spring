@@ -1,43 +1,46 @@
-package project.api.core.user;
+package project.api.core.user.request;
 
 import java.util.Set;
 
-public class User {
-    private String userName;
-    private String passWord;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+public class SignupRequest {
+    @NotBlank
+    @Size(min = 3, max = 30)
+    private String username;
+
+    @NotBlank
+    @Size(min = 6, max = 40)
+    private String password;
+
     private String firstName;
     private String lastName;
+
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
+
     private Set<String> roles;
+
     private String serviceAddress;
 
-    public User() {
+    public String getUsername() {
+        return this.username;
     }
 
-    public User(String userName, String passWord, String firstName, String lastName, String email, Set<String> roles, String serviceAddress) {
-        this.userName = userName;
-        this.passWord = passWord;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.roles = roles;
-        this.serviceAddress = serviceAddress;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserName() {
-        return this.userName;
+    public String getPassword() {
+        return this.password;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return this.passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -80,4 +83,5 @@ public class User {
         this.serviceAddress = serviceAddress;
     }
 
+    
 }

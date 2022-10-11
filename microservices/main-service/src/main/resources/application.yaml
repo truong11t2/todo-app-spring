@@ -9,7 +9,16 @@ app:
     host: localhost
     port: 7002
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/user-db
+    username: root
+    password: root
+
 logging:
   level:
     root: INFO
     project: DEBUG
+
+project.main.jwtSecret: projectSecretKey
+project.main.jwtExpirationMs: 86400000

@@ -42,4 +42,15 @@ public interface UserService {
    */
   @DeleteMapping(value = "/user")
   void deleteUser(@RequestParam(value = "userName", required = true)  String userName);
+
+//   /**
+//    * Sample usage: "curl $HOST:$PORT/role?roleName=abc".
+//    *
+//    * @param roleName Role name
+//    * @return the name of role
+//    */
+//   @GetMapping(
+//     value = "/role",
+//     produces = "application/json")
+//   User getRole(@RequestParam(value = "roleName", required = true) String roleName);
 }

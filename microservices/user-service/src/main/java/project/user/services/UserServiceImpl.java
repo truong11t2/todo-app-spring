@@ -12,7 +12,7 @@ import project.user.persistence.UserRepository;
 import project.user.persistence.UserEntity;
 
 @RestController
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private final UserRepository repository;

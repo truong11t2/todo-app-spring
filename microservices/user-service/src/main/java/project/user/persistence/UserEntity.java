@@ -1,31 +1,66 @@
 package project.user.persistence;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "user", indexes = {@Index(name = "users_unique_idx", unique = true, columnList = "userName")})
+@Table(name = "user", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "userName"),
+    @UniqueConstraint(columnNames = "email")},
+    indexes = {@Index(name = "users_unique_idx", unique = true, columnList = "userName")})
 public class UserEntity {
-    @Id @GeneratedValue
-    private int id;
+    
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Version
     private int version;
 
+    @NotBlank
+    @Size(max = 30)
     private String userName;
-    private String passWord;
-    private String firstName;
-    private String lastName;
+
+    @NotBlank
+    @Size(max = 50)
+    @Email
     private String email;
+
+    @NotBlank
+    @Size(max = 120)
+    private String passWord;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_role",
+        joinColumns = @JoinColumn(name ="user_id"),
+        inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles = new HashSet<>();
+
+    @NotBlank
+    private String firstName;
+
+    @NotBlank
+    private String lastName;
 
     public UserEntity() {
     }
 
-    public UserEntity(int id, int version, String userName, String passWord, String firstName, String lastName, String email) {
+    public UserEntity(Long id, int version, String userName, String passWord, String firstName, String lastName, String email) {
         this.id = id;
         this.version = version;
         this.userName = userName;
@@ -35,11 +70,11 @@ public class UserEntity {
         this.email = email;
     }
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -91,5 +126,12 @@ public class UserEntity {
         this.email = email;
     }
 
+    public Set<RoleEntity> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<RoleEntity> roles) {
+        //this.roles.setName(roles);
+        this.roles = roles;
+    } 
 }
