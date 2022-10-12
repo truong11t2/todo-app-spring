@@ -87,38 +87,29 @@ public class AuthController {
                                     .body(new MessageResponse("Error: Email is already registered!"));
         }
 
-        Set<String> strRoles = new HashSet<>();
+        Set<String> strRoles = signupRequest.getRoles();
+        Set<Role> roles = new HashSet<>();
 
-        if(signupRequest.getRoles() == null) {
-            strRoles.add(ERole.ROLE_USER.toString());
-        //Set<Role> roles = new HashSet<>();
-
-        //if(strRoles == null) {
-            //strRoles = new HashSet<>();
-            //Create user role as default
-            //Role userRole = new Role(ERole.ROLE_USER);
-            //roles.add(userRole);
-            strRoles.add(ERole.ROLE_USER.toString());
+        if(strRoles == null) {
+            Role userRole = new Role(ERole.ROLE_USER);
+            roles.add(userRole);
 
         } else {
             strRoles.forEach(strRole -> {
                 switch (strRole) {
                 case "admin":
-                    //Role adminRole = new Role(ERole.ROLE_ADMIN);
-                    //roles.add(adminRole);
-                    strRoles.add(ERole.ROLE_ADMIN.toString());
+                    Role adminRole = new Role(ERole.ROLE_ADMIN);
+                    roles.add(adminRole);
                     break;
 
                 case "mod":
-                    //Role modRole = new Role(ERole.ROLE_MODERATOR);
-                    //roles.add(modRole);
-                    strRoles.add(ERole.ROLE_MODERATOR.toString());
+                    Role modRole = new Role(ERole.ROLE_MODERATOR);
+                    roles.add(modRole);
                     break;
 
                 default:
-                    //Role userRole = new Role(ERole.ROLE_USER);
-                    //roles.add(userRole);
-                    strRoles.add(ERole.ROLE_USER.toString());
+                    Role userRole = new Role(ERole.ROLE_USER);
+                    roles.add(userRole);
                     break;
                 }
             });
@@ -130,7 +121,7 @@ public class AuthController {
                         signupRequest.getFirstName(), 
                         signupRequest.getLastName(), 
                         signupRequest.getEmail(),
-                        strRoles,
+                        roles,
                         signupRequest.getServiceAddress());
         integration.createUser(user);
         return ResponseEntity.ok(new MessageResponse("User is successfully registered!"));         

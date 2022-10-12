@@ -1,5 +1,7 @@
 package project.user.services;
 
+import java.util.HashSet;
+
 import org.springframework.stereotype.Component;
 
 import project.api.core.user.Role;
@@ -26,7 +28,7 @@ public class UserMapperImpl implements UserMapper {
             user.setFirstName(entity.getFirstName());
             user.setLastName(entity.getLastName());
             user.setServiceAddress(null);
-            //user.setRole(entity.getRole().getName());
+            user.setRoles(new HashSet<Role>());
             for (RoleEntity role : entity.getRoles()) {
                 user.getRoles().add(mapper.entityToApi(role));
             }
@@ -43,8 +45,7 @@ public class UserMapperImpl implements UserMapper {
             entity.setEmail(api.getEmail());
             entity.setFirstName(api.getFirstName());
             entity.setLastName(api.getLastName());
-            //userEntity.setRoles(api.getRoles());
-            for (String role : api.getRoles()) {
+            for (Role role : api.getRoles()) {
                 entity.getRoles().add(mapper.apiToEntity(role));
             }
         }
