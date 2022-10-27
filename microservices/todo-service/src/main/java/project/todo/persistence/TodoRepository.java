@@ -1,11 +1,11 @@
 package project.todo.persistence;
 
-import java.util.List;
-import java.util.Optional;
+import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 
-import org.springframework.data.repository.CrudRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public interface TodoRepository extends CrudRepository<TodoEntity, String> {
-    List<TodoEntity> findByUserName(String userName);
-    Optional<TodoEntity> findByTodoId(int todoId);
+public interface TodoRepository extends ReactiveCrudRepository<TodoEntity, String> {
+    Flux<TodoEntity> findByUserName(String userName);
+    Mono<TodoEntity> findByTodoId(int todoId);
 }

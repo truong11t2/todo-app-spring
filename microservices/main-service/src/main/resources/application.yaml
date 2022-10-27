@@ -9,12 +9,6 @@ app:
     host: localhost
     port: 7002
 
-spring:
-  datasource:
-    url: jdbc:mysql://localhost/user-db
-    username: root
-    password: root
-
 logging:
   level:
     root: INFO
@@ -22,3 +16,29 @@ logging:
 
 project.main.jwtSecret: projectSecretKeyprojectSecretKeyprojectSecretKeyprojectSecretKey
 project.main.jwtExpirationMs: 86400000
+
+spring:
+  cloud:
+    stream:
+      default-binder: rabbit
+      default-contentType: application/json
+      bindings:
+        todo-out-0:
+          destination: todo
+          producer:
+            required-groups: auditGroup
+        user-out-0:
+          destination: todo
+          producer:
+            required-groups: auditGroup
+
+      kafka:
+        binder:
+          brokers: 127.0.0.1
+          port: 9092
+      rabbitmq:
+        host: 127.0.0.1
+        port: 5672
+        username: guest
+        password: guest
+

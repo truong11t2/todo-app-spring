@@ -15,18 +15,15 @@ public class RoleMapperImpl implements RoleMapper{
 
     @Override
     public Role entityToApi(RoleEntity entity) {
-        Role role = new Role();
-        role.setRole(entity.getName());
+        Role role = new Role(entity.getName());
+
         return role;
     }
 
     @Override
     public RoleEntity apiToEntity(Role api) {
-        //ERole role = ERole.valueOf(api);
-        RoleEntity entity = new RoleEntity();
-        entity = repository.findByName(api.getRole());
+        RoleEntity entity = new RoleEntity(repository.findByName(api.getRole()));
 
-        //entity.setName(api.getRole());
         return entity;
     }
     

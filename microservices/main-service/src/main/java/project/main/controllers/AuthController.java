@@ -30,7 +30,7 @@ import project.api.core.user.response.MessageResponse;
 import project.main.security.jwt.JwtUtils;
 import project.main.security.services.UserDetailsImpl;
 import project.main.services.MainIntegration;
-import project.user.persistence.UserRepository;
+import reactor.core.publisher.Mono;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -48,14 +48,17 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository userRepository;
+    //@Autowired
+    //UserRepository userRepository;
 
     @Autowired
     JwtUtils jwtUtils;
 
     @Autowired
     PasswordEncoder encoder;
+
+    private Boolean foundUserName;
+    private Boolean foundEmail;
 
     @PostMapping(value = "/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -77,12 +80,19 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-        if(userRepository.existsByUserName(signupRequest.getUsername())) {
+        
+        Mono<Boolean> foundUserNameMono = integration.findUserName(signupRequest.getUsername());
+        foundUserNameMono.subscribe(e -> foundUserName = e);
+        //if(userRepository.existsByUserName(signupRequest.getUsername())) {
+        if(foundUserName) {
             return ResponseEntity.badRequest()
                                     .body(new MessageResponse("Error: Username is already registered!"));
         }
 
-        if(userRepository.existsByEmail(signupRequest.getEmail())) {
+        Mono<Boolean> foundEmailMono = integration.findEmail(signupRequest.getEmail());
+        foundEmailMono.subscribe(e -> foundEmail = e);
+        //if(userRepository.existsByEmail(signupRequest.getEmail())) {
+        if(foundEmail) {
             return ResponseEntity.badRequest()
                                     .body(new MessageResponse("Error: Email is already registered!"));
         }

@@ -1,7 +1,6 @@
 package project.todo.services;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +11,8 @@ import project.api.core.todo.Todo;
 import project.api.core.todo.TodoService;
 import project.todo.persistence.TodoEntity;
 import project.todo.persistence.TodoRepository;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class TodoServiceImpl implements TodoService{
@@ -28,39 +29,41 @@ public class TodoServiceImpl implements TodoService{
     }
 
     @Override
-    public Todo createTodo(Todo body) {
+    public Mono<Todo> createTodo(Todo body) {
         TodoEntity entity = mapper.apiToEntity(body);
-        TodoEntity newEntity = repository.save(entity);
-
+        Mono<TodoEntity> newEntity = repository.save(entity);
         LOG.debug("creatTodo: entity was created for todoId: {}", body.getTodoId());
-        return mapper.entityToApi(newEntity);
+        return newEntity.log(LOG.getName(), Level.FINE)
+        .map(e -> mapper.entityToApi(e));
     }
 
     @Override
-    public List<Todo> getTodos(String userName) {
-        List<TodoEntity> entities = repository.findByUserName(userName);
+    public Flux<Todo> getTodos(String userName) {
+        Flux<TodoEntity> entities = repository.findByUserName(userName);
         if(entities != null) {
-            List<Todo> todos = new ArrayList<>();
-            for(TodoEntity entity : entities) {
-                Todo todo = mapper.entityToApi(entity);
-                todos.add(todo);
-                LOG.debug("getTodo: found todoId: {}", todo.getTodoId());
-            }
-            return todos;
+            return entities.log(LOG.getName(), Level.FINE)
+            .map(e -> mapper.entityToApi(e))
+            .map(e -> setServiceAddress(e));
         }
         LOG.debug("Could not find todos for {}", userName);  
         return null;
     }
 
     @Override
-    public void deleteTodo(int todoId) {
+    public Mono<Void> deleteTodo(int todoId) {
         LOG.debug("deleteTodo: try to delete an entity with todoId: {}", todoId);
-        repository.findByTodoId(todoId).ifPresent(e -> repository.delete(e));
+        return repository.deleteAll(repository.findByTodoId(todoId));
     }
 
     @Override
-    public void deleteTodos(String userName) {
+    public Mono<Void> deleteTodos(String userName) {
         LOG.debug("deleteTodos: try to delete list of todos from user: {}", userName);
-        repository.deleteAll(repository.findByUserName(userName));
+        return repository.deleteAll(repository.findByUserName(userName));
+    }
+
+    private Todo setServiceAddress(Todo e) {
+        //Todo: implement util project
+        //e.getServiceAddress()
+        return null;
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import project.api.core.user.User;
 import project.main.services.MainIntegration;
+import reactor.core.publisher.Mono;
 
 @Service
 public class UserDetailsSeviceImpl implements UserDetailsService {
@@ -19,13 +20,22 @@ public class UserDetailsSeviceImpl implements UserDetailsService {
     @Autowired
     private MainIntegration integration;
 
+    private UserDetails userDetails;
+
     @Override
     //@Transactional
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         try {
             //UserEntity userEntity = userRepository.findByUserName(userName);
-            User user = integration.getUser(userName);
-            return UserDetailsImpl.build(user);
+            Mono<User> userMono = integration.getUser(userName);
+
+            //UserDetails userDetails;
+            //Covert mono user obj to user obj
+            userMono.subscribe(user -> {
+                userDetails = UserDetailsImpl.build(user);
+            });
+            //userMono.flatMap(UserDetailsImpl.build(user));
+            return userDetails;
         } catch (UsernameNotFoundException e) {
             logger.error("User Not Found with username: ", userName);
         }
