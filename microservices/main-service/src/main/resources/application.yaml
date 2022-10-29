@@ -35,7 +35,7 @@ spring:
       kafka:
         binder:
           brokers: 127.0.0.1
-          port: 9092
+          port: 2181
       rabbitmq:
         host: 127.0.0.1
         port: 5672

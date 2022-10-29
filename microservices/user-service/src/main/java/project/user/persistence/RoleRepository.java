@@ -3,7 +3,6 @@ package project.user.persistence;
 //import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import project.api.core.user.Role.ERole;
 
 //@Repository

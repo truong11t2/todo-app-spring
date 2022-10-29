@@ -2,6 +2,8 @@ package project.api.core.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import reactor.core.publisher.Mono;
 
 public interface UserService {
@@ -9,15 +11,15 @@ public interface UserService {
   Mono<User> createUser(User body);
 
   /**
-   * Sample usage: "curl $HOST:$PORT/user/userName".
+   * Sample usage: "curl $HOST:$PORT/user?userName=abc".
    *
    * @param userName User name of the user
    * @return the user information
    */
   @GetMapping(
-    value = "/user/{userName}",
+    value = "/user",
     produces = "application/json")
-  Mono<User> getUser(@PathVariable String userName);
+  Mono<User> getUser(@RequestParam(value = "userName", required = true) String userName);
 
   @GetMapping(
     value = "/user/{findUser}",
