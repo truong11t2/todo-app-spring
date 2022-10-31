@@ -110,7 +110,7 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public Mono<Boolean> findUserName(String userName) {
-        String url = userServiceUrl + "?findUser=" + userName;
+        String url = userServiceUrl + "/findUser/?findUser=" + userName;
         LOG.debug("Will call the findUser API on URL: {}", url);
 
         return webClient.get().uri(url).retrieve().bodyToMono(Boolean.class).log(LOG.getName(), Level.FINE)
@@ -119,7 +119,7 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public Mono<Boolean> findEmail(String email) {
-        String url = userServiceUrl + "?findEmail=" + email;
+        String url = userServiceUrl + "/findEmail/?findEmail=" + email;
         LOG.debug("Will call the findEmail API on URL: {}", url);
 
         return webClient.get().uri(url).retrieve().bodyToMono(Boolean.class).log(LOG.getName(), Level.FINE)

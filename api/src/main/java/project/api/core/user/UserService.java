@@ -1,7 +1,6 @@
 package project.api.core.user;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import reactor.core.publisher.Mono;
@@ -22,16 +21,16 @@ public interface UserService {
   Mono<User> getUser(@RequestParam(value = "userName", required = true) String userName);
 
   @GetMapping(
-    value = "/user/{findUser}",
+    value = "/user/findUser",
     produces = "application/json"
   )
-  public Mono<Boolean> findUserName(@PathVariable String userName);
+  Mono<Boolean> findUserName(@RequestParam(value = "findUser", required = true) String userName);
 
   @GetMapping(
-    value = "/user/{findEmail}",
+    value = "/user/findEmail",
     produces = "application/json"
   )
-  public Mono<Boolean> findEmail(@PathVariable String email);
+  Mono<Boolean> findEmail(@RequestParam(value = "findEmail", required = true) String email);
 
   Mono<Void> deleteUser(String userName);
 }
