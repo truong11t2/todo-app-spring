@@ -14,7 +14,7 @@ import project.todo.persistence.TodoEntity;
 import project.todo.persistence.TodoRepository;
 
 @RestController
-public class TodoServiceImpl implements TodoService{
+public class TodoServiceImpl implements TodoService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TodoServiceImpl.class);
 

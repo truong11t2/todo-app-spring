@@ -14,7 +14,7 @@
             "type": "java",
             "name": "Launch MainServiceApplication",
             "request": "launch",
-            "mainClass": "project.main.MainServiceApplication",
+            "mainClass": "project.microservices.mainservice.MainServiceApplication",
             "projectName": "main-service"
         },
         {

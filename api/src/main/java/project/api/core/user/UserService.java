@@ -35,6 +35,18 @@ public interface UserService {
     produces = "application/json")
   User getUser(@RequestParam(value = "userName", required = true) String userName);
 
+  @GetMapping(
+    value = "/user/findEmail",
+    produces = "application/json"
+  )
+  Boolean findUserName(@RequestParam(value = "findUser", required = true) String userName);
+
+  @GetMapping(
+    value = "/user/findEmail",
+    produces = "application/json"
+  )
+  Boolean findEmail(@RequestParam(value = "findEmail", required = true) String email);
+  
   /**
    * Sample usage: "curl -X DELETE $HOST:$PORT/user?userName=abc".
    *

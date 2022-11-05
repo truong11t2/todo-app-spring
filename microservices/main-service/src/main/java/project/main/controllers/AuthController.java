@@ -30,7 +30,6 @@ import project.api.core.user.response.MessageResponse;
 import project.main.security.jwt.JwtUtils;
 import project.main.security.services.UserDetailsImpl;
 import project.main.services.MainIntegration;
-import project.user.persistence.UserRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -48,8 +47,8 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
 
-    @Autowired
-    UserRepository userRepository;
+    //@Autowired
+    //UserRepository userRepository;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -77,12 +76,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
-        if(userRepository.existsByUserName(signupRequest.getUsername())) {
+        //if(userRepository.existsByUserName(signupRequest.getUsername())) {
+        if(integration.findUserName(signupRequest.getUsername())) {
             return ResponseEntity.badRequest()
                                     .body(new MessageResponse("Error: Username is already registered!"));
         }
 
-        if(userRepository.existsByEmail(signupRequest.getEmail())) {
+        //if(userRepository.existsByEmail(signupRequest.getEmail())) {
+        if(integration.findEmail(signupRequest.getEmail())) {
             return ResponseEntity.badRequest()
                                     .body(new MessageResponse("Error: Email is already registered!"));
         }

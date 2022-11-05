@@ -94,6 +94,22 @@ public class MainIntegration implements UserService, TodoService {
     }
 
     @Override
+    public Boolean findUserName(String userName) {
+        String url = userServiceUrl + "/findUser/?findUser=" + userName;
+        LOG.debug("Will call the findUser API on URL: {}", url);
+
+        return restTemplate.getForObject(url, Boolean.class);
+    }
+
+    @Override
+    public Boolean findEmail(String email) {
+        String url = userServiceUrl + "/findEmail/?findEmail=" + email;
+        LOG.debug("Will call the findEmail API on URL: {}", url);
+        
+        return restTemplate.getForObject(url, Boolean.class);
+    }
+
+    @Override
     public void deleteUser(String userName) {
         String url = userServiceUrl + "?userName=" + userName;
         LOG.debug("Will call the deleteUser API on URL: {}", url);

@@ -49,4 +49,16 @@ public class UserServiceImpl implements UserService {
         LOG.debug("deleteUser: delete user: {}", userName);
         repository.delete(repository.findByUserName(userName));
     }
+
+    @Override
+    public Boolean findUserName(String userName) {
+        LOG.debug("findUserName: find user: {}", userName);
+        return repository.existsByUserName(userName);
+    }
+
+    @Override
+    public Boolean findEmail(String email) {
+        LOG.debug("findEmail: find email: {}", email);
+        return repository.existsByEmail(email);
+    }
 }
