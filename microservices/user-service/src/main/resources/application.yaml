@@ -25,4 +25,6 @@ spring.config.activate.on-profile: docker
 server.port: 8080
 
 spring.datasource:
-  url: jdbc:mysql://mysql/user-db  
+  url: jdbc:mysql://mysql/user-db
+  username: user
+  password: pwd

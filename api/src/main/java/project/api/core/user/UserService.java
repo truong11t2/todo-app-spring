@@ -36,7 +36,7 @@ public interface UserService {
   User getUser(@RequestParam(value = "userName", required = true) String userName);
 
   @GetMapping(
-    value = "/user/findEmail",
+    value = "/user/findUser",
     produces = "application/json"
   )
   Boolean findUserName(@RequestParam(value = "findUser", required = true) String userName);
