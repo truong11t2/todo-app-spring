@@ -1,0 +1,15 @@
+dependencies:
+- name: common
+  repository: file://../../common
+  version: 1.0.0
+- name: todo
+  repository: file://../../components/todo
+  version: 1.0.0
+- name: user
+  repository: file://../../components/user
+  version: 1.0.0
+- name: main
+  repository: file://../../components/main
+  version: 1.0.0
+digest: sha256:8ab3b6c79be87fec266aa6c6429762544d53aeb1a269cbc11ed5367c78a4d7d8
+generated: "2022-11-19T23:54:32.7203207+07:00"

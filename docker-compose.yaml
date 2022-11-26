@@ -3,6 +3,7 @@ version: '2.1'
 services:
   todo:
     build: microservices/todo-service
+    image: hands-on/todo-service
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -12,6 +13,7 @@ services:
 
   user:
     build: microservices/user-service
+    image: hands-on/user-service
     mem_limit: 512m
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -21,6 +23,7 @@ services:
 
   main:
     build: microservices/main-service
+    image: hands-on/main-service
     mem_limit: 512m
     ports:
       - "8080:8080"

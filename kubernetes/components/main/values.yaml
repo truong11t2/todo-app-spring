@@ -1,0 +1,11 @@
+fullnameOverride: main
+
+image:
+  name: main-service
+
+env:
+  SPRING_PROFILES_ACTIVE: "docker"
+
+livenessProbe_enabled: false
+
+readinessProbe_enabled: false

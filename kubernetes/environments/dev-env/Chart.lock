@@ -1,0 +1,21 @@
+dependencies:
+- name: common
+  repository: file://../../common
+  version: 1.0.0
+- name: mongodb
+  repository: file://../../components/mongodb
+  version: 1.0.0
+- name: mysql
+  repository: file://../../components/mysql
+  version: 1.0.0
+- name: todo
+  repository: file://../../components/todo
+  version: 1.0.0
+- name: user
+  repository: file://../../components/user
+  version: 1.0.0
+- name: main
+  repository: file://../../components/main
+  version: 1.0.0
+digest: sha256:f38da19547de998daa741cf8b8cc4e85d2987c4e7253c89a0929148b3582bfcb
+generated: "2022-11-19T08:56:42.3904085+07:00"

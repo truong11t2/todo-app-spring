@@ -1,0 +1,18 @@
+mysql:
+  env:
+    MYSQL_ROOT_PASSWORD: rootpwd
+    MYSQL_DATABASE: user-db
+    MYSQL_USER: user
+    MYSQL_PASSWORD: pwd
+
+#todo:
+#  envFromSecretRefs:
+#    - config-client-credentials
+
+#user:
+#  envFromSecretRefs:
+#    - config-client-credentials
+
+#main:
+#  envFromSecretRefs:
+#    - config-client-credentials

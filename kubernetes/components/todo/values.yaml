@@ -1,0 +1,12 @@
+fullnameOverride: todo
+
+image:
+  name: todo-service
+
+env:
+  SPRING_PROFILES_ACTIVE: "docker"
+
+livenessProbe_enabled: false
+
+readinessProbe_enabled: false
+

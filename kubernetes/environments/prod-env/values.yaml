@@ -1,0 +1,38 @@
+todo:
+  image:
+    tag: v1
+  env:
+    SPRING_PROFILES_ACTIVE: "docker,prod"
+  envFromSecretRefs:
+    - config-client-credentials
+  resources:
+    requests:
+      memory: 200Mi
+    limits:
+      memory: 400Mi
+
+user:
+  image:
+    tag: v1
+  env:
+    SPRING_PROFILES_ACTIVE: "docker,prod"
+  envFromSecretRefs:
+    - config-client-credentials
+  resources:
+    requests:
+      memory: 200Mi
+    limits:
+      memory: 400Mi
+
+main:
+  image:
+    tag: v1
+  env:
+    SPRING_PROFILES_ACTIVE: "docker,prod"
+  envFromSecretRefs:
+    - config-client-credentials
+  resources:
+    requests:
+      memory: 200Mi
+    limits:
+      memory: 400Mi
