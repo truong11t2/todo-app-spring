@@ -9,7 +9,7 @@ metadata:
     helm.sh/chart: main-1.0.0
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80
@@ -28,7 +28,7 @@ metadata:
     helm.sh/chart: mongodb-1.0.0
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 27017
   selector:
@@ -44,7 +44,7 @@ metadata:
     helm.sh/chart: mysql-1.0.0
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 3306
   selector:
@@ -60,7 +60,7 @@ metadata:
     helm.sh/chart: todo-1.0.0
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80
@@ -79,7 +79,7 @@ metadata:
     helm.sh/chart: user-1.0.0
     app.kubernetes.io/managed-by: Helm
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80
@@ -110,7 +110,7 @@ spec:
       containers:
         - name: main
           image: "hands-on/main-service:latest"
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: docker
@@ -213,7 +213,7 @@ spec:
       containers:
         - name: todo
           image: "hands-on/todo-service:latest"
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: docker
@@ -247,7 +247,7 @@ spec:
       containers:
         - name: user
           image: "hands-on/user-service:latest"
-          imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           env:
           - name: SPRING_PROFILES_ACTIVE
             value: docker

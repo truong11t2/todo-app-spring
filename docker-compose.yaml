@@ -1,4 +1,4 @@
-version: '2.1'
+#version: '2.1'
 
 services:
   todo:
@@ -26,7 +26,7 @@ services:
     image: hands-on/main-service
     mem_limit: 512m
     ports:
-      - "8080:8080"
+      - "80:80"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
@@ -52,7 +52,7 @@ services:
       - "3307:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=rootpwd
-      - MYSQL_DATABASE=user-db
+      - MYSQL_DATABASE=user
       - MYSQL_USER=user
       - MYSQL_PASSWORD=pwd
     healthcheck:

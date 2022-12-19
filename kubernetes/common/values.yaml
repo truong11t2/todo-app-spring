@@ -1,9 +1,15 @@
 replicaCount: 1
 
+ingress:
+  annotations:
+    cert-manager.io/issuer: selfsigned
+  tls:
+    secretName: tls-certificate
+
 image:
   repository: hands-on
   tag: latest
-  pullPolicy: Never
+  pullPolicy: IfNotPresent
   args: []
 
 ports:
@@ -44,6 +50,7 @@ resources:
 
 service:
   type: ClusterIP
+  #type: NodePort
   ports:
   - port: 80
     targetPort: http

@@ -1,7 +1,12 @@
+ingress:
+  host: minikube.me
+  paths:
+    - path: /
+      service: main
 mysql:
   env:
     MYSQL_ROOT_PASSWORD: rootpwd
-    MYSQL_DATABASE: user-db
+    MYSQL_DATABASE: user
     MYSQL_USER: user
     MYSQL_PASSWORD: pwd
 
