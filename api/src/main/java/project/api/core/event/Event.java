@@ -6,35 +6,35 @@ import static java.time.ZonedDateTime.now;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 
-public class Event<K, T> {
+public class Event<T, K, D> {
     public enum Type {
         CREATE,
         DELETE
     }
 
-    private final Type eventType;
+    private final T type;
     private final K key;
-    private final T data;
+    private final D data;
     private final ZonedDateTime eventCreateAt;
 
 
     public Event() {
-        this.eventType = null;
+        this.type = null;
         this.key = null;
         this.data = null;
         this.eventCreateAt = null;
     }
 
-    public Event(Type eventType, K key, T data) {
-        this.eventType = eventType;
+    public Event(T type, K key, D data) {
+        this.type = type;
         this.key = key;
         this.data = data;
         this.eventCreateAt = now();
     }
 
 
-    public Type getEventType() {
-        return this.eventType;
+    public T getEventType() {
+        return this.type;
     }
 
 
@@ -43,7 +43,7 @@ public class Event<K, T> {
     }
 
 
-    public T getData() {
+    public D getData() {
         return this.data;
     }
 

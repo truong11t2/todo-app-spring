@@ -4,7 +4,6 @@ import java.util.logging.Level;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.api.core.todo.Todo;
@@ -22,7 +21,6 @@ public class TodoServiceImpl implements TodoService{
     private final TodoRepository repository;
     private final TodoMapper mapper;
 
-    @Autowired
     public TodoServiceImpl(TodoRepository repository, TodoMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;

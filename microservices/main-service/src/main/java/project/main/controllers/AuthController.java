@@ -40,7 +40,6 @@ public class AuthController {
     @Autowired
     private MainIntegration integration;
 
-    @Autowired
     public AuthController(MainIntegration integration) {
         this.integration = integration;
     }

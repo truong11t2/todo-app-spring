@@ -3,7 +3,6 @@ package project.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +22,6 @@ public class UserServiceApplication {
 	private final Integer threadPoolSize;
 	private final Integer taskQueueSize;
 
-	@Autowired
 	public UserServiceApplication(
 		@Value("${app.threadPoolSize:10}") Integer threadPoolSize,
 		@Value("${app.threadQueueSize:100}") Integer taskQueueSize

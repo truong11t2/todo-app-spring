@@ -4,7 +4,6 @@ import java.util.logging.Level;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +23,6 @@ public class UserServiceImpl implements UserService {
 
     private final Scheduler jdbcScheduler;
 
-    @Autowired
     public UserServiceImpl(@Qualifier("jdbcScheduler") Scheduler jdbcScheduler, UserRepository repository, UserMapper mapper) {
         this.jdbcScheduler = jdbcScheduler;
         this.repository = repository;

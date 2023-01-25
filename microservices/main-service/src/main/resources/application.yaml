@@ -24,11 +24,11 @@ spring:
       default-contentType: application/json
       bindings:
         todo-out-0:
-          destination: todo
+          destination: todo-service
           producer:
             required-groups: auditGroup
         user-out-0:
-          destination: user
+          destination: user-service
           producer:
             required-groups: auditGroup
 

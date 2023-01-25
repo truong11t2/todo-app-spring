@@ -6,7 +6,6 @@ import static reactor.core.publisher.Flux.empty;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -19,6 +18,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 //import com.fasterxml.jackson.databind.ObjectMapper;
 
 import project.api.core.event.Event;
+import project.api.core.event.Event.Type;
 import project.api.core.todo.Todo;
 import project.api.core.todo.TodoService;
 import project.api.core.user.User;
@@ -40,7 +40,6 @@ public class MainIntegration implements UserService, TodoService {
     private final StreamBridge streamBridge;
     private final Scheduler publishEventScheduler;
 
-    @Autowired
     public MainIntegration(
         @Qualifier("publishEventScheduler") Scheduler publishEventScheduler,
 
@@ -66,11 +65,18 @@ public class MainIntegration implements UserService, TodoService {
     @Override
     public Mono<Todo> createTodo(Todo body) {
         return Mono.fromCallable(() -> {
-            sendMessage("todo-out-0", new Event<>(Event.Type.CREATE, body.getTodoId(), body));
+            sendMessageTodo("todo-out-0", new Event<Event.Type, Integer, Todo>(Event.Type.CREATE, body.getTodoId(), body));
             return body;
         }).subscribeOn(publishEventScheduler);
     }
 
+    private void sendMessageTodo(String bindingName, Event<Type, Integer, Todo> event) {
+        LOG.debug("Sending a {} message to {}", bindingName, event.getEventType());
+        Message<Event<Type, Integer, Todo>> message = MessageBuilder.withPayload(event)
+            .setHeader("partitionKey", event.getKey())
+            .build();
+        streamBridge.send(bindingName, message);
+    }
 
     @Override
     public Flux<Todo> getTodos(String userName) {
@@ -81,8 +87,16 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public Mono<Void> deleteTodo(int todoId) {
-        return Mono.fromRunnable(() -> sendMessage("todo-out-0", new Event<>(Event.Type.DELETE, todoId, null)))
+        return Mono.fromRunnable(() -> sendMessageInt("todo-out-0", new Event<Event.Type, Integer, String>(Event.Type.DELETE, todoId, null)))
             .subscribeOn(publishEventScheduler).then();
+    }
+
+    private void sendMessageInt(String bindingName, Event<Type, Integer, String> event) {
+        LOG.debug("Sending a {} message to {}", bindingName, event.getEventType());
+        Message<Event<Type, Integer, String>> message = MessageBuilder.withPayload(event)
+            .setHeader("partitionKey", event.getKey())
+            .build();
+        streamBridge.send(bindingName, message);
     }
 
     @Override
@@ -94,9 +108,17 @@ public class MainIntegration implements UserService, TodoService {
     @Override
     public Mono<User> createUser(User body) {
         return Mono.fromCallable(() -> {
-            sendMessage("user-out-0", new Event<>(Event.Type.CREATE, body.getUserName(), body));
+            sendMessageUser("user-out-0", new Event<Event.Type, String, User >(Event.Type.CREATE, body.getUserName(), body));
             return body;
         }).subscribeOn(publishEventScheduler);
+    }
+
+    private void sendMessageUser(String bindingName, Event<Type, String, User> event) {
+        LOG.debug("Sending a {} message to {}", bindingName, event.getEventType());
+        Message<Event<Type, String, User>> message = MessageBuilder.withPayload(event)
+            .setHeader("partitionKey", event.getKey())
+            .build();
+        streamBridge.send(bindingName, message);
     }
 
     @Override
@@ -129,13 +151,13 @@ public class MainIntegration implements UserService, TodoService {
 
     @Override
     public Mono<Void> deleteUser(String userName) {
-        return Mono.fromRunnable(() -> sendMessage("todo-out-0", new Event<>(Event.Type.DELETE, userName, null)))
+        return Mono.fromRunnable(() -> sendMessage("user-out-0", new Event<>(Event.Type.DELETE, userName, null)))
         .subscribeOn(publishEventScheduler).then();
     }
 
-    private void sendMessage(String bindingName, Event event) {
+    private void sendMessage(String bindingName, Event<Event.Type, String, String> event) {
         LOG.debug("Sending a {} message to {}", bindingName, event.getEventType());
-        Message message = MessageBuilder.withPayload(event)
+        Message<Event<Type, String, String>> message = MessageBuilder.withPayload(event)
             .setHeader("partitionKey", event.getKey())
             .build();
         streamBridge.send(bindingName, message);
